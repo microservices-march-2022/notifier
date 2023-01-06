@@ -1,0 +1,24 @@
+{
+    "name": "notifier",
+    "version": "0.0.1",
+    "description": "Notify subscribed users about new messages",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=notifier_dev node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs",
+        "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=notifier_test node bin/create-db.mjs && NODE_ENV=test node bin/create-schema.mjs"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "amqplib": "^0.10.3",
+        "convict": "^6.2.3",
+        "express": "^4.18.2",
+        "express-promise-router": "^4.1.1",
+        "pg": "^8.8.0"
+    },
+    "devDependencies": {
+        "mocha": "^10.2.0",
+        "supertest": "^6.3.3"
+    }
+}

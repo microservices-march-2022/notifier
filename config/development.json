@@ -1,0 +1,10 @@
+{
+    "port": 8081,
+    "pguser": "postgres",
+    "pgpassword": "postgres",
+    "pghost": "localhost",
+    "pgport": 5433,
+    "pgdatabase": "notifier_dev",
+    "amqphost": "localhost",
+    "amqpport": 5672
+}

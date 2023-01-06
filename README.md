@@ -1,47 +1,57 @@
-# NGINX Template Repository
+# Notifier
 
-## How do I use this template?
+This is the backend for the notifier app for the NGINX Microservices March Demo Architecture
 
-**DO NOT FORK** -- this template is meant to be used from the **[`Use this template`](https://github.com/nginxinc/template-repository/generate)** feature.
+## Responsibility
 
-1. Click on **[`Use this template`](https://github.com/nginxinc/template-repository/generate)**
-2. Give a name to your project
-3. Wait until the first run of CI finishes (Github Actions will process the template and commit to your new repo)
-4. Clone your new project and happy coding!
+This service listens for notifications of events in the system that might need a notification sent to a user. It then dispatches notifications based on the user's notification preferences.
 
-**NOTE**: **WAIT** until the first CI run on GitHub Actions before cloning your new project.
+## Getting started
+This project uses NodeJS at the version specified in `.tool-versions`.  It is recommended that you use [asdf](https://asdf-vm.com/guide/getting-started.html) to manage your NodeJS version.  Once you have `asdf` installed, you can run `asdf install` to automatically have the version of NodeJS required by this project.
 
-## What is included on this template?
+<details>
+<summary>Why `asdf`?</summary>
+In a microservices environment, you may have to work on projects that use different versions of a runtime like NodeJS, or use a different language altogether!
 
-This template includes all the scaffolding you need to get started on a standards compliant NGINX repository:
+[asdf](https://asdf-vm.com/guide/getting-started.html) is a single tool that lets you manage multiple versions of different languages in isolation and will automatically switch to the required version in any directory that has a `.tool-versions` file.
 
-* Issue and PR templates
-* Contributing guidelines
-* Support guidelines
-* Security guidelines for reporting major vulnerabilities
-* Standard `.gitignore` with minimal defaults
-* NGINX Code of Conduct
-* Standard license for NGINX OSS projects
-* Changelog placeholder
-* Codeowners placeholder
+This is helpful in getting closer to [Dev/prod parity](https://12factor.net/dev-prod-parity) in a microservices environment. As you can see in this project, the CI uses the same version called out in `.tool-versions` to run the tests, and the Docker image that is used to run the program also references the `.tool-versions` file.
 
----
+This way, if we use `asdf` we're guaranteed to be developing, testing, and releasing to a consistent version of NodeJS.
+</details>
 
-<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -->
+You can also install NodeJS by other means - just reference the version number in the `.tool-versions` file.
 
-# notifier
+1. Run `docker-compose up` to start the postgres database
+1. From the [platform](https://github.com/microservices-march-2022/platform) repo, also run `docker-compose up`
+1. Create the db: `PGDATABASE=postgres node bin/create-db.mjs`
+1. Create the tables `node bin/create-schema.mjs`
+1. Supply seed data `node bin/create-seed-data.mjs`
+1. Run `node index.mjs` to start the service
 
-## Requirements
+## Using the Service
+There is no configuration needed to run this service. See the usage information for the [messenger service](https://github.com/microservices-march-2022/messenger).  When a new message is sent via that service, you should see log entries in this service indicating what fake notifications might have been sent.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam elit turpis, varius et arcu elementum, viverra rhoncus sem. Aliquam nec sodales magna, et egestas enim. Mauris lobortis ultrices euismod. Pellentesque in arcu lacus. Mauris cursus laoreet nulla, ac vehicula est. Vestibulum eu mauris quis lorem consectetur aliquam ac nec quam. Vestibulum commodo pharetra mi, at bibendum neque faucibus ut. Mauris et tortor sed sem consectetur eleifend ut non magna. Praesent feugiat placerat nibh, varius viverra orci bibendum sed. Vestibulum dapibus ex ut pulvinar facilisis. Quisque sodales enim et augue tempor mattis. Suspendisse finibus congue felis, ac blandit ligula. Praesent condimentum ultrices odio quis semper. Nunc ultrices, nibh quis mattis pellentesque, elit nulla bibendum felis, quis dapibus erat turpis ac urna.
+## Application Notes
+This application serves as a simple example of a service handling events from a message queue and having its own database.  However, it intentionally does not do a few things for the sake of simplicity:
 
-## Installation
+* Notifications are not actually sent
+* A log of sent notifications is not kept in a queryable way - however it is possible to reference the logs to see dispatch
 
-Duis sit amet sapien vel velit ornare vulputate. Nulla rutrum euismod risus ac efficitur. Curabitur in sagittis elit, a semper leo. Suspendisse malesuada aliquam velit, eu suscipit lorem vehicula at. Proin turpis lacus, semper in placerat in, accumsan non ipsum. Cras euismod, elit eget pretium laoreet, tortor nulla finibus tortor, nec hendrerit elit turpis ut eros. Quisque congue nisi id mauris molestie, eu condimentum dolor rutrum. Nullam eleifend elit ac lobortis tristique. Pellentesque nec tellus non mauris aliquet commodo a eu elit. Ut at feugiat metus, at tristique mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+## A note on code and style
 
-## Usage
+The code for this example is written in a style that not in line with application development best practices.
 
-Maecenas at vehicula justo. Suspendisse posuere elementum elit vel posuere. Etiam quis pulvinar massa. Integer tempor semper risus, vitae maximus eros ullamcorper vitae. In egestas, ex vitae gravida sodales, ipsum dolor varius est, et cursus lorem dui a mi. Morbi faucibus ut nisi id faucibus. Sed quis ullamcorper ex. In et dolor id nunc interdum suscipit.
+Instead, it is optimized to be quickly understood by those seeking to understand the Microservices March Demo Architecture without assuming special familiarity with:
+
+- Javascript
+- NodeJS
+- Express
+
+Therefore, we've opted to:
+
+- Avoid frameworks that have domain specific languages (ie, database libraries)
+- Avoid splitting up code into many different files
 
 ## Development
 
