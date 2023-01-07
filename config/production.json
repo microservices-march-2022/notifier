@@ -2,5 +2,5 @@
     "port": 8080,
     "pguser": "postgres",
     "pgport": 5432,
-    "pgdatabase": "messenger"
+    "pgdatabase": "notifier"
 }
