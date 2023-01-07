@@ -4,7 +4,7 @@
     "description": "Notify subscribed users about new messages",
     "main": "index.js",
     "scripts": {
-        "test": "NODE_ENV=test mocha --loader=esmock --exit",
+        "test": "NODE_ENV=test mocha --exit",
         "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=notifier_dev node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs",
         "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=notifier_test node bin/create-db.mjs && NODE_ENV=test node bin/create-schema.mjs"
     },
@@ -18,7 +18,6 @@
         "pg": "^8.8.0"
     },
     "devDependencies": {
-        "esmock": "^2.1.0",
         "mocha": "^10.2.0",
         "sinon": "^15.0.1",
         "supertest": "^6.3.3"

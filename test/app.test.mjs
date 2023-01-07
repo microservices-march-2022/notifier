@@ -1,6 +1,5 @@
 import supertest from "supertest";
 import app, { handleMessageConsume, handleNewMessageEvent } from "../index.mjs";
-import assert from "assert";
 import { query } from "../db/index.mjs";
 import {
   createNotificationPreference,
