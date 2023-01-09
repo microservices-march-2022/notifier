@@ -3,7 +3,7 @@
     "pguser": "postgres",
     "pgpassword": "postgres",
     "pghost": "localhost",
-    "pgport": 5432,
+    "pgport": 5433,
     "pgdatabase": "notifier_test",
     "amqphost": "localhost",
     "amqpport": 5672

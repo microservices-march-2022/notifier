@@ -14,7 +14,7 @@ describe("notifier service API", () => {
 
   describe("GET /health", () => {
     it("should return OK", async () => {
-      await supertest(app).get("/health").expect(500);
+      await supertest(app).get("/health").expect(200);
     });
   });
 });
