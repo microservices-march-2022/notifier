@@ -46,6 +46,7 @@ jobs:
           NODE_ENV: test'
 
   build-and-push:
+    needs: api-test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -74,9 +75,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            # minimal
-                ype=edge
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
