@@ -60,7 +60,7 @@ jobs:
         id: versions
 
       - name: Write node version to docker container
-        run: sed -i "1s/.*/FROM node:${{ steps.versions.outputs.nodejs }}-bullseye-slim/"
+        run: sed -i "1s/.*/FROM node:${{ steps.versions.outputs.nodejs }}-bullseye-slim/" Dockerfile
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
