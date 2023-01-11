@@ -33,6 +33,8 @@ You can also install NodeJS by other means - just reference the version number i
 There is no configuration needed to run this service. See the usage information for the [messenger service](https://github.com/microservices-march-2022/messenger).  When a new message is sent via that service, you should see log entries in this service indicating what fake notifications might have been sent.
 
 ## Application Notes
+The required configuration for this application can be understood by viewing the [configuration schema](/config/config.mjs)
+
 This application serves as a simple example of a service handling events from a message queue and having its own database.  However, it intentionally does not do a few things for the sake of simplicity:
 
 * Notifications are not actually sent
