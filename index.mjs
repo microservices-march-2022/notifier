@@ -3,6 +3,7 @@ import amqp from "amqplib";
 import express from "express";
 import Router from "express-promise-router";
 import { query } from "./db/index.mjs";
+import opentelemetry from "@opentelemetry/api";
 
 /* =================
    SERVER SETUP
@@ -87,10 +88,14 @@ export async function handleNewMessageEvent(messageContent) {
     );
     return;
   }
+  const tracer = opentelemetry.trace.getTracer("notifier");
   for (let pref of preferences) {
-    console.log(
-      `Sending notification of new message via ${pref.address_type} to ${pref.address}`
-    );
+    tracer.startActiveSpan("notification.send", {attributes: { "notification_type": pref.address_type, "user_id": pref.user_id }}, span => {
+      console.log(
+        `Sending notification of new message via ${pref.address_type} to ${pref.address}`
+      );
+      span.end();
+    })
   }
 }
 
