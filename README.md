@@ -55,6 +55,7 @@ You can run this project on a container using `Docker` together with `Docker Com
 3. (Docker - Prod) From the root directory of this repository, build the `notifier` Docker image:
 
     ```bash
+    # in ./app
     docker build -t notifier .
     ```
 
@@ -74,30 +75,35 @@ You can run this project on a container using `Docker` together with `Docker Com
 6. (NodeJS - Dev) Install NodeJS modules:
 
     ```bash
+    # in ./app
     npm install
     ```
 
 7. Create the PostgreSQL DB:
 
     ```bash
+    # in ./app
     PGDATABASE=postgres node scripts/create-db.mjs
     ```
 
 8. Create the PostgreSQL DB tables:
 
     ```bash
+    # in ./app
     node scripts/create-schema.mjs
     ```
 
 9. Create some PostgreSQL DB seed data:
 
     ```bash
+    # in ./app
     node scripts/create-seed-data.mjs
     ```
 
 10. (NodeJS - Dev) Start the service:
 
     ```bash
+    # in ./app
     node index.mjs
     ```
 
