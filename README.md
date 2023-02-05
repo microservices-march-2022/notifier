@@ -55,13 +55,14 @@ You can run this project on a container using `Docker` together with `Docker Com
 3. (Docker - Prod) From the root directory of this repository, build the `notifier` Docker image:
 
     ```bash
+    # in ./app
     docker build -t notifier .
     ```
 
 4. (Docker - Prod) Start the `notifier` service in a container:
 
     ```bash
-    docker run -d -p 8084:8084 --name notifier -e PGPASSWORD=postgres -e CREATE_DB_NAME=notifier -e PGHOST=notifier-db-1 -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=8084 -e PGPORT=5433 --network mm_2023 notifier
+    docker run -d -p 5000:5000 --name notifier -e PGPASSWORD=postgres -e CREATE_DB_NAME=notifier -e PGHOST=notifier-db-1 -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=5000 -e PGPORT=5433 --network mm_2023 notifier
 
     ```
 
@@ -74,30 +75,35 @@ You can run this project on a container using `Docker` together with `Docker Com
 6. (NodeJS - Dev) Install NodeJS modules:
 
     ```bash
+    # in ./app
     npm install
     ```
 
 7. Create the PostgreSQL DB:
 
     ```bash
-    PGDATABASE=postgres node bin/create-db.mjs
+    # in ./app
+    PGDATABASE=postgres node scripts/create-db.mjs
     ```
 
 8. Create the PostgreSQL DB tables:
 
     ```bash
-    node bin/create-schema.mjs
+    # in ./app
+    node scripts/create-schema.mjs
     ```
 
 9. Create some PostgreSQL DB seed data:
 
     ```bash
-    node bin/create-seed-data.mjs
+    # in ./app
+    node scripts/create-seed-data.mjs
     ```
 
 10. (NodeJS - Dev) Start the service:
 
     ```bash
+    # in ./app
     node index.mjs
     ```
 

@@ -1,5 +1,5 @@
 {
-    "port": 8081,
+    "port": 5000,
     "pguser": "postgres",
     "pgpassword": "postgres",
     "pghost": "localhost",
