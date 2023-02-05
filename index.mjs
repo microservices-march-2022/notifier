@@ -51,6 +51,7 @@ async function main() {
 
 export async function handleMessageConsume(channel, msg, handlers) {
   if (msg !== null) {
+    console.log(msg);
     const handler = handlers[msg.properties.type];
 
     if (handler) {
@@ -89,6 +90,7 @@ export async function handleNewMessageEvent(messageContent) {
     return;
   }
   const tracer = opentelemetry.trace.getTracer("notifier");
+
   for (let pref of preferences) {
     tracer.startActiveSpan("notification.send", {attributes: { "notification_type": pref.address_type, "user_id": pref.user_id }}, span => {
       console.log(
