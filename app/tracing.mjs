@@ -21,12 +21,12 @@ const metricReader = new PeriodicExportingMetricReader({
 
 const sdk = new opentelemetry.NodeSDK({
   resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: "messenger",
+    [SemanticResourceAttributes.SERVICE_NAME]: "notifier",
   }),
   // traceExporter: new opentelemetry.tracing.ConsoleSpanExporter(),
   traceExporter: new OTLPTraceExporter({
     // optional: default url is http://localhost:4318/v1/traces
-    // url: "<your-otlp-endpoit>/v1/traces",
+    url: "http://jaeger_1:4318/v1/traces",
     // optional: A collection of custom headers to be sent with each request, empty be default
     headers: {},
   }),
