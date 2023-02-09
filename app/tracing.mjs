@@ -9,6 +9,14 @@ import {
   PeriodicExportingMetricReader,
   ConsoleMetricExporter,
 } from "@opentelemetry/sdk-metrics";
+import ip from "ip";
+import * as os from "os";
+import getContainerId from "./container-id.mjs";
+
+import { CONSUL_ID } from "./consul/index.mjs";
+import getId from "docker-container-id";
+
+const SERVICE_HOST = ip.address();
 
 // For troubleshooting, set the log level to DiagLogLeve.DEBUG
 diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
@@ -22,6 +30,9 @@ const metricReader = new PeriodicExportingMetricReader({
 const sdk = new opentelemetry.NodeSDK({
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: "notifier",
+    [SemanticResourceAttributes.HOST_ID]: SERVICE_HOST,
+    [SemanticResourceAttributes.HOST_NAME]: os.hostname(),
+    [SemanticResourceAttributes.CONTAINER_ID]: await getContainerId()
   }),
   // traceExporter: new opentelemetry.tracing.ConsoleSpanExporter(),
   traceExporter: new OTLPTraceExporter({

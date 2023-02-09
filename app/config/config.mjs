@@ -63,7 +63,25 @@ const config = convict({
     default: null,
     env: "AMQPPORT",
     arg: "amqpport",
-  }
+  },
+  consulServiceName: {
+    doc: "the name by which the service will be registered in consul. If not specified, the service will not be registered",
+    format: "*",
+    default: null,
+    env: "CONSUL_SERVICE_NAME",
+  },
+  consulHost: {
+    doc: "The host at which the consul client may be found",
+    format: String,
+    default: "consul-client",
+    env: "CONSUL_HOST",
+  },
+  consulPort: {
+    doc: "port for the consul client",
+    format: "port",
+    default: 8500,
+    env: "CONSUL_PORT",
+  },
 });
 
 const env = config.get("env");
