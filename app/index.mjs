@@ -4,6 +4,7 @@ import express from "express";
 import Router from "express-promise-router";
 import { query } from "./db/index.mjs";
 import opentelemetry from "@opentelemetry/api";
+import { register as registerConsul } from "./consul/index.mjs";
 
 /* =================
    SERVER SETUP
@@ -115,6 +116,7 @@ export async function handleNewMessageEvent(messageContent) {
 ================== */
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
+  registerConsul();
 });
 
 export default app;
