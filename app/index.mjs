@@ -3,6 +3,7 @@ import amqp from "amqplib";
 import express from "express";
 import Router from "express-promise-router";
 import { query } from "./db/index.mjs";
+import { trace } from "@opentelemetry/api";
 
 /* =================
    SERVER SETUP
@@ -49,6 +50,7 @@ async function main() {
 }
 
 export async function handleMessageConsume(channel, msg, handlers) {
+  console.log("RABBIT_MQ_MESSAGE: ", msg);
   if (msg !== null) {
     const handler = handlers[msg.properties.type];
 
@@ -87,11 +89,37 @@ export async function handleNewMessageEvent(messageContent) {
     );
     return;
   }
-  for (let pref of preferences) {
-    console.log(
-      `Sending notification of new message via ${pref.address_type} to ${pref.address}`
-    );
-  }
+
+  const tracer = trace.getTracer("notifier");
+  tracer.startActiveSpan(
+    "notification.send_all",
+    {
+      attributes: {
+        user_id: msg.user_id,
+      },
+    },
+    (parentSpan) => {
+      for (let pref of preferences) {
+        tracer.startActiveSpan(
+          "notification.send",
+          {
+            attributes: {
+              notification_type: pref.address_type,
+              user_id: pref.user_id,
+            },
+          },
+          (span) => {
+            console.log(
+              `Sending notification of new message via ${pref.address_type} to ${pref.address}`
+            );
+            span.end();
+          }
+        );
+      }
+
+      parentSpan.end();
+    }
+  );
 }
 
 /* =================
