@@ -62,7 +62,7 @@ You can run this project on a container using `Docker` together with `Docker Com
 4. (Docker - Prod) Start the `notifier` service in a container:
 
     ```bash
-    docker run -d -p 5000:5000 --name notifier -e PGPASSWORD=postgres -e CREATE_DB_NAME=notifier -e PGHOST=notifier-db-1 -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=5000 -e PGPORT=5433 --network mm_2023 notifier
+    docker run -d -p 5000:5000 --name notifier -e PGPASSWORD=postgres -e CREATE_DB_NAME=notifier -e PGHOST=notifier-db -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=5000 -e PGPORT=5433 --network mm_2023 notifier
 
     ```
 
